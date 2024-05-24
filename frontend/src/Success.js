@@ -1,20 +1,26 @@
-import logo from "./logo.svg";
 import "./App.css";
 import success from "./assets/images/icon-success.svg";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 function Success() {
   return (
-    <div class="success-container">
-      <img src={success} alt="success icon" />
-      <h1>Thanks for subscribing!</h1>
-      <p>
-        A confirmation email has been sent to{" "}
-        <span style={"font-weight: 700"}>email@gmail.com</span>. Please open it
-        and click the button inside to confirm your subscription.
-      </p>
-      <button>Dismiss message</button>
+    <div className="bg-white md:bg-dark-navy h-screen w-500 flex justify-center items-center">
+      <div className="flex flex-col align-start text-dark-navy p-20 bg-white w-full md:w-1/3 rounded-2xl">
+        <img className="w-20 py-10" src={success} alt="success icon" />
+        <h1 className="flex-auto text-4xl font-bold pt-3 pb-5">
+          Thanks for subscribing!
+        </h1>
+        <p>
+          A confirmation email has been sent to{" "}
+          <span className="font-bold">email@gmail.com</span>. Please open it and
+          click the button inside to confirm your subscription.
+        </p>
+        <button
+          className="flex-auto w-full bg-dark-navy hover:bg-gradient-1 hover:shadow-custom cursor-pointer text-white font-bold py-3 px-4 rounded my-4 mt-40vh md:mt-12"
+          type="submit"
+        >
+          Dismiss message
+        </button>
+      </div>
     </div>
   );
 }

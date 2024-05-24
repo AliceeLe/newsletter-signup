@@ -1,27 +1,31 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "./logo.svg";
+import { useHistory } from "react-router-dom";
+
 import "./App.css";
 import desktop from "./assets/images/illustration-sign-up-desktop.svg";
 import mobile from "./assets/images/illustration-sign-up-mobile.svg";
 import iconList from "./assets/images/icon-list.svg";
+import useScreenSize from "./useScreenSize";
 
 function Input({ value, setValue }) {
-  // If email doesn't consist of @
-  // Customize red
+  const [state, setState] = setValue("unsubmitted");
+
+  //bg-red-50 border border-red-500
   return (
-    <div className="flex flex-col items-stretch gap-10">
-      <form>
-        <h2 className="w-full text-sm font-bold ">Email address</h2>
+    <div className="flex flex-col items-stretch">
+      <form className="flex flex-col gap-4">
+        <h2 className="w-full text-sm font-bold">Email address</h2>
         <input
-          type="email"
-          class="w-full opacity-50 border py-3 px-4 rounded"
+          type="text"
+          className={`w-full opacity-50 border py-3 px-4 rounded ${
+            state === "invalid" ? "bg-red-50 border border-red-500" : ""
+          }`}
           value={value}
           onChange={(e) => setValue(e.target.value)}
         />
-        <br />
         <button
-          className="w-full bg-dark-navy hover:bg-blue-700 cursor-pointer text-white font-bold py-3 px-4 rounded"
+          className="w-full bg-dark-navy hover:bg-gradient-1 hover:shadow-custom cursor-pointer text-white font-bold py-3 px-4 rounded my-4"
           type="submit"
         >
           Subscribe to monthly newsletter
@@ -50,16 +54,21 @@ function Content() {
 
 function App() {
   const [email, setEmail] = useState("email@company.com");
-  // React Hook to take width of screen
-  const background = mobile; // Implement logic to switch between mobile and desktop based on screen width
+  let background = mobile;
+  const screenSize = useScreenSize();
+  if (screenSize.width > 768) {
+    background = desktop;
+  }
   return (
-    <div className="flex flex-col md:flex-row gap-5 items-stretch">
-      <div className="flex-auto object-cover">
-        <img className="w-full" src={background} alt="background" />
-      </div>
-      <div className="flex-auto px-10 text-dark-navy">
-        <Content />
-        <Input value={email} setValue={setEmail} />
+    <div className="bg-white md:bg-dark-navy h-screen w-800 flex justify-center items-center">
+      <div className="flex flex-col md:flex-row-reverse gap-5 items-stretch bg-white w-800 max-w-4xl p-10 rounded-2xl	">
+        <div className="flex-auto object-cover">
+          <img className="w-full" src={background} alt="background" />
+        </div>
+        <div className="flex-auto px-10 text-dark-navy content-center">
+          <Content />
+          <Input value={email} setValue={setEmail} />
+        </div>
       </div>
     </div>
   );
